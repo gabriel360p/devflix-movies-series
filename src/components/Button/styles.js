@@ -10,6 +10,8 @@ padding:10px 20px;
 cursor: pointer;
 font-size:1rem;
 font-weight:600;
+min-height: 44px;
+transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
 
 &:hover{
   color:#ff0000;

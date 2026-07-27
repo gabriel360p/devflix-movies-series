@@ -1,11 +1,10 @@
 import { useState } from "react"
 import { Container, Background } from "./styles"
 import { useEffect } from "react"
-import Api from "../../services/axios";
 import getVideo from '../../utils/getVideo.js'
-import { getTrailer } from "../../services/getData.js";
+import { getContentVideos } from "../../services/getData.js";
 
-export const Modal = ({ movieId, modalState }) => {
+export const Modal = ({ movieId, modalState, contentType = 'movie' }) => {
 
     const [movie, setMovie] = useState(null)
     const [movieKey, setMovieKey] = useState(null)
@@ -13,12 +12,13 @@ export const Modal = ({ movieId, modalState }) => {
     useEffect(() => {
 
         async function apiLoader() {
-            const infos = await getTrailer(movieId)
-            setMovie(infos[0])
-            setMovieKey(infos[1])
+            const videos = await getContentVideos(contentType, movieId);
+            const trailer = videos.find(video => video.type === 'Trailer' && video.site === 'YouTube') || videos[0];
+            setMovie(trailer)
+            setMovieKey(trailer?.key)
         } apiLoader()
 
-    }, [])
+    }, [contentType, movieId])
 
     return (
         // recebi a função vinda de home e daqui eu consigo acessar essa função! que daora

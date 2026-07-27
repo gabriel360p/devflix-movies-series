@@ -17,6 +17,7 @@ function Router() {
                 <Route path="/series" element={<Series />} />
                 {/* valores dinâmicos: */}
                 <Route path="/detalhes/:id" element={<Detail />} />
+                <Route path="/detalhes/:contentType/:id" element={<Detail />} />
             </Route>
 
 

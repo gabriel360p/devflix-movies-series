@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Background, Container, Cover, Info, ContainerMovies } from './styles.js'
-import { getMovieCredits, getMovieSimilar, getMovieById, getAllTrailer } from '../../services/getData.js';
+import { getContentCredits, getContentDetails, getContentSimilar, getContentVideos } from '../../services/getData.js';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import setupImgPath from '../../utils/getImages.js'
@@ -15,25 +15,31 @@ const Detail = () => {
     const [movieCredits, setMovieCredits] = useState()
 
     const [movieSimilar, setMovieSimilar] = useState()
-    const { id: paramsMovieId } = useParams();
+    const { id: paramsMovieId, contentType = 'movie' } = useParams();
 
     useEffect(() => {
         async function apiLoader() {
-            setMovie(await getMovieById(paramsMovieId))
-            setTrailers(await getAllTrailer(paramsMovieId))
-            setMovieCredits(await getMovieCredits(paramsMovieId));
-            setMovieSimilar(await getMovieSimilar(paramsMovieId));
+            const [details, videos, credits, similar] = await Promise.all([
+                getContentDetails(contentType, paramsMovieId),
+                getContentVideos(contentType, paramsMovieId),
+                getContentCredits(contentType, paramsMovieId),
+                getContentSimilar(contentType, paramsMovieId)
+            ]);
+            setMovie(details);
+            setTrailers(videos);
+            setMovieCredits(credits);
+            setMovieSimilar(similar);
         } apiLoader()
-    }, [])
+    }, [contentType, paramsMovieId])
     return (
         <>
             <Background $image={setupImgPath(movie?.backdrop_path)} />
             <Container>
                 <Cover>
-                    <img src={setupImgPath(movie?.poster_path)} alt={setupImgPath(movie?.title)} />
+                    <img src={setupImgPath(movie?.poster_path)} alt={movie?.title || movie?.name || 'Capa do conteudo'} />
                 </Cover>
                 <Info>
-                    <h2>{movie?.title}</h2>
+                    <h2>{movie?.title || movie?.name}</h2>
                     <SpanGenres genres={movie?.genres} />
 
                     <p>{movie?.overview}</p>
@@ -56,7 +62,7 @@ const Detail = () => {
                 ))}
             </ContainerMovies>
             {movieSimilar &&
-                <Carrousel carrouselTitle={"Filmes similares"} data={movieSimilar} />
+                <Carrousel carrouselTitle={contentType === 'tv' ? "Series similares" : "Filmes similares"} data={movieSimilar} />
             }
         </>
     )

@@ -32,6 +32,13 @@ export const Carrousel = ({ ...props }) => {
                     autoplay={true}
                     spaceBetween={10}
                     slidesPerView={6}
+                    breakpoints={{
+                        0: { slidesPerView: 2, spaceBetween: 12 },
+                        480: { slidesPerView: 3, spaceBetween: 12 },
+                        768: { slidesPerView: 4, spaceBetween: 14 },
+                        1024: { slidesPerView: 5, spaceBetween: 16 },
+                        1280: { slidesPerView: 6, spaceBetween: 18 },
+                    }}
                 >
                     {
                         mainArray?.map(topContent => (

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DevFlixLogo from "../../assets/logo.png"
 import { Logo, NavBar, RouterLink } from './styles'
 import { useLocation } from "react-router-dom"
@@ -8,13 +8,13 @@ export const Nav = () => {
     const { pathname } = useLocation();
     const [changeBackground, setChangeBackground] = useState(false)
 
-    window.onscroll = () => {
-        if (window.pageYOffset > 150) {
-            setChangeBackground(true)
-        } else {
-            setChangeBackground(false)
-        }
-    }
+    useEffect(() => {
+        const handleScroll = () => setChangeBackground(window.scrollY > 150);
+
+        handleScroll();
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <NavBar $scrollPosition={changeBackground}>

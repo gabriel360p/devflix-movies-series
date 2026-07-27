@@ -7,6 +7,7 @@ export const Container = styled.div`
   justify-content: start;
   margin-top:30px;
   gap: 10px;
+  flex-wrap: wrap;
 `;
 
 export const Genres = styled.span`
@@ -20,5 +21,6 @@ export const Genres = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 `;
 

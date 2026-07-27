@@ -11,6 +11,7 @@ export const Container = styled.div`
     display: flex;
     margin-top:30px;
     gap:10px;
+    flex-wrap: wrap;
     div{
         display: flex;
         flex-direction: column;
@@ -20,6 +21,13 @@ export const Container = styled.div`
         color:white;
     }
     img{
-        height:200px;
+        width: clamp(90px, 18vw, 150px);
+        aspect-ratio: 2 / 3;
+        height:auto;
+        object-fit: cover;
+    }
+
+    @media (max-width: 768px){
+        justify-content: center;
     }
 `

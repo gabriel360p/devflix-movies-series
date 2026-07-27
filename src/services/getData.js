@@ -5,7 +5,7 @@ export const getMovie = async () => {
         const { data: movieData } = await Api.get('/movie/popular')
         return movieData.results[1];
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar o filme.', error);
     }
 }
 
@@ -14,7 +14,7 @@ export const getMovies = async () => {
         const { data: topMovies } = await Api.get('/movie/top_rated')
         return topMovies;
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar os filmes.', error);
     }
 }
 
@@ -24,7 +24,7 @@ export const getSeries = async () => {
         return topSeries;
 
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar as series.', error);
     }
 }
 
@@ -34,7 +34,7 @@ export const getActors = async () => {
         const { data: topActors } = await Api.get('/person/popular')
         return topActors;
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar os atores.', error);
     }
 }
 
@@ -46,7 +46,7 @@ export const getTrailer = async (movieId) => {
         const dataTrailer = [data.results, data.results[0].key]
         return dataTrailer;
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar o trailer.', error);
     }
 }
 
@@ -57,7 +57,7 @@ export const getAllTrailer = async (movieId) => {
         const { data } = await Api.get(`/movie/${movieId}/videos`)
         return data.results;
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar os trailers.', error);
     }
 }
 
@@ -69,7 +69,7 @@ export const getMovieCredits = async (movieId) => {
         // return dataTrailer;
         return cast;
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar os creditos.', error);
     }
 }
 
@@ -80,7 +80,7 @@ export const getMovieSimilar = async (movieId) => {
         // return dataTrailer;
         return data;
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar os filmes similares.', error);
     }
 }
 export const getMovieById = async (movieId) => {
@@ -88,6 +88,68 @@ export const getMovieById = async (movieId) => {
         const { data } = await Api.get(`/movie/${movieId}`)
         return data;
     } catch (error) {
-        const errors = error;
+        console.error('Nao foi possivel carregar os detalhes do filme.', error);
     }
-} 
+}
+
+export const getContentByGenre = async (contentType, genreId) => {
+    try {
+        const { data } = await Api.get(`/discover/${contentType}`, {
+            params: { with_genres: genreId, sort_by: 'popularity.desc' }
+        });
+        return data;
+    } catch (error) {
+        console.error('Nao foi possivel carregar esta categoria.', error);
+        return { results: [] };
+    }
+}
+
+export const getFeaturedContent = async (contentType) => {
+    try {
+        const endpoint = contentType === 'tv' ? '/tv/on_the_air' : '/movie/now_playing';
+        const { data } = await Api.get(endpoint);
+        return data.results?.[0];
+    } catch (error) {
+        console.error('Nao foi possivel carregar o destaque.', error);
+        return null;
+    }
+}
+
+export const getContentDetails = async (contentType, contentId) => {
+    try {
+        const { data } = await Api.get(`/${contentType}/${contentId}`);
+        return data;
+    } catch (error) {
+        console.error('Nao foi possivel carregar os detalhes.', error);
+    }
+}
+
+export const getContentVideos = async (contentType, contentId) => {
+    try {
+        const { data } = await Api.get(`/${contentType}/${contentId}/videos`);
+        return data.results || [];
+    } catch (error) {
+        console.error('Nao foi possivel carregar os trailers.', error);
+        return [];
+    }
+}
+
+export const getContentCredits = async (contentType, contentId) => {
+    try {
+        const { data } = await Api.get(`/${contentType}/${contentId}/credits`);
+        return data.cast || [];
+    } catch (error) {
+        console.error('Nao foi possivel carregar os creditos.', error);
+        return [];
+    }
+}
+
+export const getContentSimilar = async (contentType, contentId) => {
+    try {
+        const { data } = await Api.get(`/${contentType}/${contentId}/similar`);
+        return data;
+    } catch (error) {
+        console.error('Nao foi possivel carregar conteudos similares.', error);
+        return { results: [] };
+    }
+}
