@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 
 import Home from "../containers/Home";
-import Movies from "../containers/movies";
-import Series from "../containers/series";
+import Movies from "../containers/Movies";
+import Series from "../containers/Series";
 import Detail from "../containers/Detail";
 import DefaultLayout from "../layout/DefaultLayout";
 
