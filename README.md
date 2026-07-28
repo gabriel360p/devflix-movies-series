@@ -136,7 +136,7 @@ A aplicação foi desenvolvida utilizando conceitos importantes do desenvolvimen
 
 
 
-<img src="https://skillicons.dev/icons?i=react,typescript,vite,tailwind,git,github" />
+<img src="https://skillicons.dev/icons?i=react,vite,axios,styled-components,git,github" />
 
 
 
@@ -154,7 +154,7 @@ A aplicação foi desenvolvida utilizando conceitos importantes do desenvolvimen
 
 - **Vite** — Ambiente moderno para desenvolvimento e otimização da aplicação;
 
-- **Tailwind CSS** — Criação da interface responsiva e estilização dos componentes;
+- **Styled-Components** — Criação da interface responsiva e estilização dos componentes;
 
 - **Axios** — Realização das requisições HTTP para consumo de APIs;
 
